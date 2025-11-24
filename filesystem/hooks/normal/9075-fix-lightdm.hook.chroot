@@ -12,7 +12,7 @@ sed -i -e 's|#greeter-show-manual-login=false|greeter-show-manual-login=true|g' 
 sed -i -e 's|#greeter-session=example-gtk-session|greeter-session=slick-greeter|g' /etc/lightdm/lightdm.conf
 
 cat << EOF > /etc/lightdm/slick-greeter.conf
-[greeter]
+[Greeter]
 background=/usr/share/backgrounds/login.jpeg
 clock-format=%a, %H:%M
 theme-name=Shopno GTK Theme-Light
