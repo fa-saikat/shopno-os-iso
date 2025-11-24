@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x 
+
+populate_chrootDir() {
+    mkdir -p $LB_CONFIG_DIR/archives
+    mkdir -p $LB_CONFIG_DIR/bootloaders
+
+    mkdir -p $CHROOT_DIR
+    mkdir -p $CHROOT_DIR/etc
+    mkdir -p $CHROOT_DIR/etc/{dpkg/origins,skel,sudoers.d}
+    mkdir -p $CHROOT_DIR/etc/skel/.{config,local/share}
+    mkdir -p $CHROOT_DIR/etc/skel/.local/share/{applications,screensaver,xfce4-panel-profiles}
+
+    mkdir -p $CHROOT_DIR/usr
+    mkdir -p $CHROOT_DIR/usr/{lib,local,share,src}
+    mkdir -p $CHROOT_DIR/usr/local/{bin,share/applications}
+    mkdir -p $CHROOT_DIR/usr/share/{applications,backgrounds,icons,themes}
+}
+
+# populate_chrootDir

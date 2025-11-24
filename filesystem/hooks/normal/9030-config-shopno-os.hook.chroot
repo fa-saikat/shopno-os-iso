@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -e
+# set -x
+
+# Fixing dpkg vendor
+ln -sfn /etc/dpkg/origins/shopno /etc/dpkg/origins/default
+
+# Fixing os-release
+ln -sfn /usr/lib/os-release /etc/os-release
+ln -sfn /usr/lib/iso-release /etc/iso-release
+
+# Fixing default wallpaper for all monitors
+ln -sfn /usr/share/backgrounds/beta-1.jpeg /usr/share/images/desktop-base/default
+ln -sfn /usr/share/backgrounds/beta-1.jpeg /usr/share/images/desktop-base/desktop-background
+
+# resolve
+echo "nameserver 1.1.1.1" | tee -a /etc/resolv.conf
+
+# Add Backports
+cat << EOF > /etc/apt/sources.list
+deb https://deb.debian.org/debian trixie main contrib non-free-firmware
+# deb-src https://deb.debian.org/debian trixie main contrib non-free non-free-firmware
+
+deb https://security.debian.org/debian-security trixie-security main contrib non-free-firmware
+# deb-src https://security.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
+
+deb https://deb.debian.org/debian trixie-updates main contrib non-free-firmware
+# deb-src https://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware
+
+deb https://deb.debian.org/debian trixie-backports main contrib non-free-firmware
+# deb-src https://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
+EOF

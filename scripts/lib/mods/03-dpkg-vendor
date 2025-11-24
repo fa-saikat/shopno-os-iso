@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x
+
+populate_dpkg_vendor() {
+	[[ -d $CHROOT_DIR/etc/dpkg/origins/ ]] || mkdir -p $CHROOT_DIR/etc/dpkg/origins 
+
+	cat << EOF > $CHROOT_DIR/etc/dpkg/origins/shopno
+Vendor: JaduPc
+Vendor-URL: https://www.jadupc.com/
+Bugs: debbugs://git.jadupc.com/
+Parent: Debian
+EOF
+}
+
+# populate_dpkg_vendor

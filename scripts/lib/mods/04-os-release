@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x
+
+# source ./common/environment
+
+populate_os_release() {
+	[[ -d $CHROOT_DIR/usr/lib/ ]] || mkdir -p $CHROOT_DIR/usr/lib
+
+	cat << EOF > $CHROOT_DIR/usr/lib/os-release
+NAME="$IMAGE_NAME"
+ID=$IMAGE_ID
+ID_LIKE=debian                                           
+PRETTY_NAME="ShopnoOS $(date +"%y.0%q")"
+VARIANT="$IMAGE_VARIANT"
+VERSION="$(date +"%y.0%q") ($IMAGE_ID)"
+VERSION_ID="$(date +"%y.0%q")"
+VERSION_CODENAME=$IMAGE_ID
+HOME_URL="https://www.jadupc.com/"
+SUPPORT_URL="https://www.jadupc.com/"
+BUG_REPORT_URL="https://git.jadupc.com/"
+EOF
+}
+
+# populate_os_release

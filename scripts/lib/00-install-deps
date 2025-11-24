@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x 
+
+install_dependencies() {
+    local -a deps=('live-build' 'squashfs-tools' 'syslinux-common' 'syslinux-utils' 'xorriso' 'isolinux')
+    local -a missing=()
+
+    for pkg in "${deps[@]}"; do
+        if ! dpkg-query --show --showformat='${db:Status-Status}\n' $pkg > /dev/null; then
+            missing+=("$pkg")
+        fi
+    done
+
+    if (( ${#missing[@]} > 0 )); then
+        _warn "Installing dependencies: ${missing[*]}"
+        apt install -y -qq "${missing[@]}" || {
+            _error "Failed to resolve dependencies."
+                    exit 1
+        }
+    fi
+}
+
+# install_dependencies

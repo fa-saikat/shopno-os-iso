@@ -1,0 +1,31 @@
+---
+componentName:   ShopnoOS
+welcomeStyleCalamares: false
+
+strings:
+    productName:         ShopnoOS
+    shortProductName:    ShopnoOS
+    version:             25.11
+    shortVersion:        25.11
+    versionedName:       ShopnoOS 25.11
+    shortVersionedName:  ShopnoOS
+    bootloaderEntryName: ShopnoOS
+#	productUrl:          https://dev.jadupc.com/builds/iso/ShopnoOS-Beta-amd64.hybrid.iso
+#   supportUrl:          
+#   knownIssuesUrl:      
+#   releaseNotesUrl:     
+#   donateUrl:              
+
+images:
+    productLogo:         "logo.png"
+    productIcon:         "icon.png"
+#   productWallpaper:    "wallpaper.png"
+#   productWelcome:      "slide_cs.png"
+
+slideshow:               "show.qml"
+
+style:
+   sidebarBackground:    "#292F34"
+   sidebarText:          "#FFFFFF"
+   sidebarTextSelect:    "#292F34"
+   sidebarTextHighlight: "#8a67b8"

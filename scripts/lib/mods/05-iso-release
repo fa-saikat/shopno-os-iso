@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x 
+
+# source ./common/enviroment
+
+read -p "Release Version: " iso_release
+
+populate_iso_release() {
+	[[ -d $CHROOT_DIR/usr/lib/ ]] || mkdir -p $CHROOT_DIR/usr/lib
+
+	cat << EOF > $CHROOT_DIR/usr/lib/iso-release
+ISO_RELEASE="v$iso_release"
+ISO_CODENAME=$IMAGE_ID
+ISO_BUILD=$(date)
+EOF
+}
+
+# populate_iso_release

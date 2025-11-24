@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -e
+# set -x
+
+# store APT repository key
+install -d -m 0755 /etc/apt/keyrings
+mkdir -p -m 700 ~/.gnupg
+
+# repository signing key
+# wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null # firefox
+curl https://desktop.turbowarp.org/release-signing-key.gpg | gpg --dearmor | tee /usr/share/keyrings/turbowarp.gpg > /dev/null # turbowarp
+
+# only office
+curl -fsSL https://download.onlyoffice.com/GPG-KEY-ONLYOFFICE | gpg --no-default-keyring --keyring gnupg-ring:/tmp/onlyoffice.gpg --import
+chmod 644 /tmp/onlyoffice.gpg
+sudo chown root:root /tmp/onlyoffice.gpg
+sudo mv /tmp/onlyoffice.gpg /usr/share/keyrings/onlyoffice.gpg
+
+# sources list
+# echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | tee -a /etc/apt/sources.list.d/mozilla.list > /dev/null # firefox
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/turbowarp.gpg] https://releases.turbowarp.org/deb stable main" | sudo tee /etc/apt/sources.list.d/turbowarp.list # turbowarp
+# echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+echo 'deb [signed-by=/usr/share/keyrings/onlyoffice.gpg] https://download.onlyoffice.com/repo/debian squeeze main' | tee -a /etc/apt/sources.list.d/onlyoffice.list
+
+# install package
+apt update
+apt install -y ibus-avro onlyoffice-desktopeditors turbowarp-desktop
+# apt install -y -t bookworm-backports firmware-amd-graphics linux-image-amd64
+
+# Flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install -y flathub io.missioncenter.MissionCenter
+
+# Banglafonts
+cd /
+apt install -y ./ttf-bijoy_1.0.0-2_all.deb
+rm ttf-bijoy_1.0.0-2_all.deb

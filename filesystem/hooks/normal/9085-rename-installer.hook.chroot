@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Change installer icon name to ShopnoOS
+sed -i -e 's|Debian|ShopnoOS|g' /usr/share/applications/calamares-install-debian.desktop
+sed -i -e 's|^ *Icon=install-debian|Icon=/usr/share/icons/shopno-os.png|' /usr/share/applications/calamares-install-debian.desktop

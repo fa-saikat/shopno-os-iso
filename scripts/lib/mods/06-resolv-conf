@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x
+
+populate_resolv_conf() {
+	[[ -d $CHROOT_DIR/etc/ ]] || mkdir -p $CHROOT_DIR/etc
+
+	cat << EOF > $CHROOT_DIR/etc/resolv.conf 
+nameserver 1.1.1.1
+EOF
+}

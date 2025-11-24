@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x
+
+gen_livebuild_conf() {
+	_info "Generating live-build config"
+	_info "Cache directory: $CACHE_DIR"
+
+	lb config --binary-image iso-hybrid \
+			--archive-areas "main contrib non-free-firmware" \
+			--parent-archive-areas "main contrib non-free-firmware" \
+			--mirror-bootstrap "http://mirror.sg.gs/debian" \
+			--apt-source-archives false \
+			--backports false \
+			--security true \
+			--updates true \
+			--checksums sha512 \
+			--clean \
+			--color \
+			--debootstrap-options "--include=apt-transport-https,ca-certificates,openssl" \
+			--distribution trixie \
+			--firmware-binary true \
+			--firmware-chroot true \
+			--image-name "$IMAGE_NAME" \
+			--iso-application "$ISO_APPLICATION" \
+			--iso-preparer "$ISO_PREPARER" \
+			--iso-publisher "$ISO_PUBLISHER" \
+			--iso-volume "$ISO_VOLUME" \
+			--linux-flavours amd64 \
+			--memtest memtest86+ \
+			--win32-loader false \
+			--bootappend-live "boot=live components hostname=shopnoos-live username=liveuser user-fullname=Shopnobaz timezone='Asia/Dhaka' efi_no_storage_paranoia" \
+			"${@}" @>/dev/null
+}
+
+# gen_livebuild_conf

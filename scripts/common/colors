@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+_info() {
+	printf '\033[0;31;36m%b\033[0m' "[$(date +'%F %r')] [Info]  $1\n"
+}
+
+_warn() {
+    printf '\033[0;31;33m%b\033[0m' "[$(date +'%F %r')] [Warn]  $1\n"
+}
+
+_error() {
+    printf '\033[0;31;31m%b\033[0m' "[$(date +'%F %r')] [Error] $1\n"
+}
+
+_ok() {
+    printf '\033[0;31;32m%b\033[0m' "[$(date +'%F %r')] [Done]  $1\n"
+}

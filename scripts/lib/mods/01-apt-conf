@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+# set -x
+
+populate_apt_conf() {
+	[[ -d $CHROOT_DIR/etc/apt/apt.conf.d/ ]] || mkdir -p $CHROOT_DIR/etc/apt/apt.conf.d
+
+	cat << EOF > $CHROOT_DIR/etc/apt/apt.conf.d/99fix-desktops
+DPKg::Post-Invoke {"bash /usr/local/bin/shopno-os-fix-desktops";};
+EOF
+
+	cat << EOF > $CHROOT_DIR/etc/apt/apt.conf.d/99add-uninstall-button
+DPKg::Post-Invoke { "/usr/local/bin/apt-hook-99add-uninstall-button || true"; };
+EOF
+
+	cat << EOF > $CHROOT_DIR/etc/apt/apt.conf.d/99fix-settings-manager
+DPKg::Post-Invoke { "/usr/local/bin/shopno-os-fix-settings-manager || true"; };
+EOF
+}
+
+# populate_apt_conf

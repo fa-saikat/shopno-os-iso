@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail 
+# set -x 
+
+# user specific
+SUDO_USER_NAME="${SUDO_USER:-$(logname)}"
+
+# setting up directories
+WORKING_DIR=$(dirname "$(readlink -f "$(basename "$(pwd)")")")
+SRC_DIR="$WORKING_DIR/filesystem"
+BUILD_DIR="$WORKING_DIR/build"
+CACHE_DIR="$WORKING_DIR/build/tmp"
+
+LB_CONFIG_DIR="$CACHE_DIR/config"
+CHROOT_DIR="$LB_CONFIG_DIR/includes.chroot"
+
+# release
+IMAGE_ID="trixie"
+IMAGE_VARIANT="workstation"
+
+# live-config flags
+IMAGE_NAME="ShopnoOS"
+ISO_APPLICATION="ShopnoOS"
+ISO_PREPARER="fa-saikat, JaduPc; https://git.jadupc.com/"
+ISO_PUBLISHER="JaduPc; https://jadupc.com/"
+ISO_VOLUME="ShopnoOS ($IMAGE_ID) $(date +'%y.0%q')"
+
+populate_buildDir() {
+    [[ -d $BUILD_DIR ]] || {
+        _info "Creating build directory"
+        sudo -H -u "$SUDO_USER_NAME" bash -c "mkdir -p $CHROOT_DIR"
+        cd "$CACHE_DIR"
+    }
+}
+
+# populate_buildDir
