@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_config xmlns="http://openbox.org/3.4/rc">
+  <applications>
+    <!-- Firefox -->
+    <application class="*firefox*">
+      <!--fullscreen>yes</fullscreen-->
+      <maximized>yes</maximized>
+      <decor>no</decor>
+      <focus>yes</focus>
+      <size>
+        <width>100%</width>
+        <height>100%</height>
+      </size>
+    </application>
+
+    <!-- Onboard -->
+    <application class="*Onboard*">
+      <layer>above</layer>
+      <desktop>all</desktop>
+      <maximized>no</maximized>
+      <fullscreen>no</fullscreen>
+      <focus>no</focus>
+      <decor>no</decor>
+      <shade>no</shade>
+      <skip_pager>yes</skip_pager>
+      <skip_taskbar>yes</skip_taskbar>
+    </application>
+  </applications>
+</openbox_config>

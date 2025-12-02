@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+LINK="$HOME/.kiosk_link"
+TOOL="/usr/lib/shopno-os/kiosk-initial-setup/GUI.py"
+
+launch_setup_tool() {
+	python3 "$TOOL"
+
+	if [[ ! -f "$LINK" ]]; then
+		notify-send "ShopnoOS Kiosk" "Error: Link not found"
+		launch_setup_tool
+	fi
+}
+
+launch_kiosk() {
+	if [[ ! -f "$LINK" ]]; then
+		notify-send "ShopnoOS Kiosk" "Error: Link not found"
+		launch_setup_tool
+	fi
+
+	MOZ_USE_XINPUT2=1 xargs -n1 firefox --no-remote --private-window --kiosk < "$LINK"
+}
+
+if wget -q -T10 -O- https://ipinfo.io/org; then
+	notify-send "ShopnoOS Kiosk" "Network connection found. Launching kiosk..."
+	launch_kiosk
+else
+	notify-send "ShopnoOS Kiosk" "Device is not connected to network. Launching setup tool..."
+	launch_setup_tool
+fi
+

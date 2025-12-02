@@ -15,6 +15,7 @@ populate_chrootDir() {
 
     mkdir -p $CHROOT_DIR/usr
     mkdir -p $CHROOT_DIR/usr/{lib,local,share,src}
+    mkdir -p $CHROOT_DIR/usr/lib/shopno-os/kiosk-initial-setup
     mkdir -p $CHROOT_DIR/usr/local/{bin,share/applications}
     mkdir -p $CHROOT_DIR/usr/share/{applications,backgrounds,icons,themes}
 }

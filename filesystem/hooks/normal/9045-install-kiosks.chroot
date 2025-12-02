@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+
+# Kiosk initial configuration app 
+# mkdir -vp /usr/lib/shopno-os/kiosk-initial-setup

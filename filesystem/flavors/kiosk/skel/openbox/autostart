@@ -1,0 +1,12 @@
+#!/usr/bin/env bash 
+
+xset -dpms
+xset s off
+xset s noblank
+
+unclutter --idle 1 &
+onboard --startup-delay=3 &
+xmodmap -e "clear mod1"
+xmodmap -e "clear mod4"
+
+bash /usr/local/bin/start-kiosk-setup

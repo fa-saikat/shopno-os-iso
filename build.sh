@@ -45,6 +45,12 @@ cp -r $SRC_DIR/flavors/xfce/skel/Kvantum	$CHROOT_DIR/etc/skel/.config/	# kvantum
 cp -r $SRC_DIR/flavors/xfce/skel/.bash* 	$CHROOT_DIR/etc/skel/		# bash configurations
 cp -r $SRC_DIR/flavors/xfce/skel/.xscreensaver 	$CHROOT_DIR/etc/skel/		# screensaver
 cp -r $SRC_DIR/flavors/xfce/skel/.face* 	$CHROOT_DIR/etc/skel/		# profile mugshot
+_warn "Adding kiosk specific configs"
+cp -r $SRC_DIR/flavors/kiosk/kiosk-initial-setup	$CHROOT_DIR/usr/lib/shopno-os/						# kiosk initial setup tool
+cp -r $SRC_DIR/flavors/kiosk/skel/openbox	$CHROOT_DIR/etc/skel/.config/	# openbox configuration	
+cp -r $SRC_DIR/flavors/kiosk/skel/touchegg	$CHROOT_DIR/etc/skel/.config/	# touchegg configuration
+cp    $SRC_DIR/flavors/kiosk/start-kiosk-setup 	$CHROOT_DIR/usr/local/bin/	# 
+
 
 # ShopnoOS xfce4-panel-profile
 cp -r $SRC_DIR/flavors/xfce/panel/* 		$CHROOT_DIR/etc/skel/.local/share/xfce4-panel-profiles/	# panel profile
@@ -86,7 +92,7 @@ echo "lightdm lightdm-settings" > $LB_CONFIG_DIR/package-lists/display-manager.l
 echo "mpv pavucontrol vlc" > $LB_CONFIG_DIR/package-lists/multimedia.list
 
 # IDEs and codeeditors
-echo "arduino codeblocks code geany sublime-text" > $LB_CONFIG_DIR/package-lists/development.list.chroot
+# echo "arduino codeblocks code geany sublime-text" > $LB_CONFIG_DIR/package-lists/development.list.chroot
 
 # Desktop Environment: XFCE4
 echo "evince galculator  thunar thunar-archive-plugin thunar-data thunar-font-manager thunar-media-tags-plugin thunar-volman xfce4 xfce4-notifyd xfce4-terminal xfce4-panel-profiles xfce4-power-manager ristretto xscreensaver xfce4-battery-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-datetime-plugin xfce4-diskperf-plugin xfce4-fsguard-plugin xfce4-genmon-plugin xfce4-mailwatch-plugin xfce4-netload-plugin xfce4-places-plugin xfce4-screenshooter xfce4-sensors-plugin xfce4-smartbookmark-plugin xfce4-systemload-plugin xfce4-timer-plugin xfce4-wavelan-plugin xfce4-weather-plugin xfce4-xkb-plugin xfce4-whiskermenu-plugin xarchiver mugshot mousepad tumbler" > $LB_CONFIG_DIR/package-lists/xfce.list.chroot
@@ -95,27 +101,30 @@ echo "evince galculator  thunar thunar-archive-plugin thunar-data thunar-font-ma
 echo "breeze-gtk-theme breeze-icon-theme qt5-style-kvantum" > $LB_CONFIG_DIR/package-lists/apprearance.list.chroot
 
 # Internet
-echo "google-chrome-stable" > $LB_CONFIG_DIR/package-lists/internet.list.chroot
+# echo "google-chrome-stable" > $LB_CONFIG_DIR/package-lists/internet.list.chroot
 
 # Fonts and input
-echo "fonts-beng fonts-noto-core fonts-noto-extra fonts-noto-ui-core fonts-noto-ui-extra fonts-noto-color-emoji ibus-avro" > $LB_CONFIG_DIR/package-lists/input-methods.list.chroot
+# echo "fonts-beng fonts-noto-core fonts-noto-extra fonts-noto-ui-core fonts-noto-ui-extra fonts-noto-color-emoji ibus-avro" > $LB_CONFIG_DIR/package-lists/input-methods.list.chroot
 
 # Extra packaages
-echo "google-chrome-stable flatpak gnome-software-plugin-flatpak jq accountsservice bc dconf-cli gnome-disk-utility gnome-nettool gnome-system-tools gnome-software gvfs-backends gvfs-fuse intel-media-va-driver light-locker network-manager-gnome network-manager-openconnect-gnome network-manager-openvpn-gnome pavucontrol pulseaudio pulseaudio-module-bluetooth xdg-utils systemd-timesyncd module-assistant build-essential bash-completion alsa-utils apt-transport-https autoconf automake bluetooth bluez bluez-tools blueman btrfs-progs cdtool cdrdao cdrskin cifs-utils clonezilla cryptsetup cryptsetup-initramfs cups cups-filters curl dbus-user-session dbus-x11 debconf debhelper dh-autoreconf dialog dirmngr dkms dvdauthor exfatprogs faad fakeroot ffmpeg flac foomatic-db foomatic-db-engine frei0r-plugins fuse3 gdebi git ghostscript gimp inkscape gir1.2-ibus-1.0 gparted grub-pc gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-plugins-good hardinfo haveged htop  ibus ibus-data ibus-gtk ibus-gtk3 iftop im-config inxi isolinux iw jfsutils lame less libibus-1.0-5 libqt5opengl5 libnss-mdns libsmbclient libxcb-xtest0 libxvidcore4 linux-headers-amd64 live-build lsb-release lshw menu mjpegtools mpg321 mtools mythes-en-us netcat-openbsd ntfs-3g openconnect openvpn openvpn-systemd-resolved os-prober p7zip-full pciutils perl  printer-driver-gutenprint python3-ibus-1.0 python3-psutil samba-common-bin simple-scan  sox squashfs-tools streamripper sudo syslinux syslinux-common system-config-printer testdisk timeshift udisks2 upower unzip vim wget x265 x264 xclip xcape xfsprogs xorg xserver-xorg-input-all xserver-xorg-video-all xorriso yad zenity zip zstd" > $LB_CONFIG_DIR/package-lists/extrapackages.list.chroot
+echo "flatpak gnome-software-plugin-flatpak jq accountsservice bc dconf-cli gnome-disk-utility gnome-nettool gnome-system-tools gnome-software gvfs-backends gvfs-fuse intel-media-va-driver light-locker network-manager-gnome network-manager-openconnect-gnome network-manager-openvpn-gnome pavucontrol pulseaudio pulseaudio-module-bluetooth xdg-utils systemd-timesyncd module-assistant build-essential bash-completion alsa-utils apt-transport-https autoconf automake bluetooth bluez bluez-tools blueman btrfs-progs cdtool cdrdao cdrskin cifs-utils clonezilla cryptsetup cryptsetup-initramfs cups cups-filters curl dbus-user-session dbus-x11 debconf debhelper dh-autoreconf dialog dirmngr dkms dvdauthor exfatprogs faad fakeroot ffmpeg flac foomatic-db foomatic-db-engine frei0r-plugins fuse3 gdebi git ghostscript gimp inkscape gir1.2-ibus-1.0 gparted grub-pc gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-plugins-good hardinfo haveged htop  ibus ibus-data ibus-gtk ibus-gtk3 iftop im-config inxi isolinux iw jfsutils lame less libibus-1.0-5 libqt5opengl5 libnss-mdns libsmbclient libxcb-xtest0 libxvidcore4 linux-headers-amd64 live-build lsb-release lshw menu mjpegtools mpg321 mtools mythes-en-us netcat-openbsd ntfs-3g openconnect openvpn openvpn-systemd-resolved os-prober p7zip-full pciutils perl  printer-driver-gutenprint python3-ibus-1.0 python3-psutil samba-common-bin simple-scan  sox squashfs-tools streamripper sudo syslinux syslinux-common system-config-printer testdisk timeshift udisks2 upower unzip vim wget x265 x264 xclip xcape xfsprogs xorg xserver-xorg-input-all xserver-xorg-video-all xorriso yad zenity zip zstd" > $LB_CONFIG_DIR/package-lists/extrapackages.list.chroot
 
 # Firmwares and Drivers
 echo "atmel-firmware bluez-firmware firmware-linux-free firmware-misc-nonfree firmware-amd-graphics firmware-atheros firmware-bnx2 firmware-bnx2x firmware-brcm80211 firmware-cavium firmware-intel-sound firmware-iwlwifi firmware-libertas firmware-linux firmware-linux-nonfree firmware-misc-nonfree firmware-myricom firmware-netronome firmware-netxen firmware-qcom-media firmware-qcom-soc firmware-qlogic firmware-realtek firmware-samsung firmware-siano firmware-ti-connectivity firmware-sof-signed firmware-zd1211" > $LB_CONFIG_DIR/package-lists/firmware.list.chroot
 
 # Printers
-echo "cups cups-filters printer-driver-all system-config-printer" > $LB_CONFIG_DIR/package-lists/printers.list
+# echo "cups cups-filters printer-driver-all system-config-printer" > $LB_CONFIG_DIR/package-lists/printers.list
 
 # ShopnoOS specific meta-packages
-echo "jadupc-remote-support-console shopno-os-base shopno-os-looks shopno-os-log-sync shopno-os-stats-sync shopno-os-debug shopno-os-games shopno-os-refresh-menu" > $LB_CONFIG_DIR/package-lists/jadupc.list.chroot
+# echo "jadupc-remote-support-console shopno-os-base shopno-os-looks shopno-os-log-sync shopno-os-stats-sync shopno-os-debug shopno-os-games shopno-os-refresh-menu" > $LB_CONFIG_DIR/package-lists/jadupc.list.chroot
 # echo "jadupc-remote-support-console shopno-os-base shopno-os-refresh-menu" > $LB_CONFIG_DIR/package-lists/jadupc.list.chroot
 
 
 # Bootloaders and stuff
 echo "efibootmgr grub-common grub-pc-bin grub2-common grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed grub-efi-ia32-bin libefiboot1 libefivar1 mokutil os-prober shim-helpers-amd64-signed shim-signed shim-signed-common shim-unsigned" > $LB_CONFIG_DIR/package-lists/grubs.list.binary
+
+# Kiosk specific packages
+echo "unclutter onboard zenity openbox libpugixml1v5 firefox-esr" > $LB_CONFIG_DIR/package-lists/kiosk.list.chroot
 
 
 # CREATE FOLDERS IN THE CHROOT
