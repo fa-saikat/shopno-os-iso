@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# Copyright © 2015 marmuta <marmvta@gmail.com>
+# Author: Lukas Gottschall
+#
+# This file is part of Onboard.
+#
+# Onboard is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# Onboard is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+set -e  # Exit on any error
+
+# Get the absolute path of the script's directory
+SCRIPT_PATH="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 && pwd -P)"
+
+# Define paths
+SYSTEM_SCHEMA_DIR="/usr/share/glib-2.0/schemas"
+USER_SCHEMA_DIR="$HOME/.local/share/glib-2.0/schemas"
+
+# Determine if running as root
+if [ "$(id -u)" -eq 0 ]; then
+    echo "Installing system-wide schema..."
+    USED_SCHEMA_DIR="$SYSTEM_SCHEMA_DIR"
+else
+    echo "Installing schema as user."
+    USED_SCHEMA_DIR="$USER_SCHEMA_DIR"
+fi
+
+# Ensure the target schema directory exists
+mkdir -p "$USED_SCHEMA_DIR"
+
+# Copy schema file
+echo "Copying GSettings schema to: $USED_SCHEMA_DIR"
+cp "$SCRIPT_PATH/../data/org.onboard.gschema.xml" "$USED_SCHEMA_DIR/"
+
+# Generate user-specific GSettings override file
+echo "Generating GSettings override file..."
+python3 "$SCRIPT_PATH/gen_gschema.py" "$USED_SCHEMA_DIR/99_onboard-default-settings.gschema.override"
+
+# Compile schemas
+echo "Compiling GSettings schemas in: $USED_SCHEMA_DIR"
+glib-compile-schemas "$USED_SCHEMA_DIR"
+
+echo "Installation complete."
