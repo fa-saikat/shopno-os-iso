@@ -1,19 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-Unified Touch Control Panel - A 3-page touch-friendly GUI application combining:
-1. Wi-Fi Manager - NetworkManager frontend
-2. Audio/Brightness Controls - System controls
-3. Link Manager - Link saver and opener
-4. Display Orientation - Display rotation controls
-Dependencies (Debian/Ubuntu):
-  sudo apt update
-  sudo apt install -y python3-gi gir1.2-gtk-3.0 network-manager brightnessctl alsa-utils xrandr xinput
-Run:
-  python3 unified_control_panel.py
-Author: Fahim Abrar Saikat <fahim.saikat@jadupc.com> (JaduPc)
-"""
-
 import gi
 import os
 import shlex
@@ -279,25 +265,25 @@ class UnifiedControlPanel(Gtk.Window):
         main_container.pack_start(self.sidebar, False, True, 0)
         
         # Sidebar buttons
-        self.wifi_btn = Gtk.Button(label="📶 Network")
+        self.wifi_btn = Gtk.Button(label=" Network")
         self.wifi_btn.set_size_request(200, 100)
         self.wifi_btn.connect('clicked', lambda x: self.show_page(0))
         self.sidebar.pack_start(self.wifi_btn, False, False, 0)
-        self.controls_btn = Gtk.Button(label="🔊 Controls")
+        self.controls_btn = Gtk.Button(label="  Controls")
         self.controls_btn.set_size_request(200, 100)
         self.controls_btn.connect('clicked', lambda x: self.show_page(1))
         self.sidebar.pack_start(self.controls_btn, False, False, 0)
-        self.display_btn = Gtk.Button(label="🖥️ Display")
+        self.display_btn = Gtk.Button(label="󰹑   Display")
         self.display_btn.set_size_request(200, 100)
         self.display_btn.connect('clicked', lambda x: self.show_page(3))
         self.sidebar.pack_start(self.display_btn, False, False, 0)
-        self.links_btn = Gtk.Button(label="🔗 Webapp")
+        self.links_btn = Gtk.Button(label="  Webapp")
         self.links_btn.set_size_request(200, 100)
         self.links_btn.connect('clicked', lambda x: self.show_page(2))
         self.sidebar.pack_start(self.links_btn, False, False, 0)
         
         # Exit button at bottom of sidebar
-        self.exit_btn = Gtk.Button(label="❌ Exit")
+        self.exit_btn = Gtk.Button(label="󰈆  Exit")
         self.exit_btn.set_size_request(200, 80)
         self.exit_btn.connect('clicked', lambda x: Gtk.main_quit())
         self.sidebar.pack_end(self.exit_btn, False, False, 0)
@@ -344,7 +330,7 @@ class UnifiedControlPanel(Gtk.Window):
         bottom_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
         self.wifi_status_lbl = Gtk.Label(label="Status: idle", xalign=0)
         bottom_box.pack_start(self.wifi_status_lbl, True, True, 0)
-        scan_btn = Gtk.Button(label="🔄 Refresh")
+        scan_btn = Gtk.Button(label="󰑐 Refresh")
         scan_btn.set_size_request(140, 60) # Touch-friendly size
         scan_btn.connect('clicked', self.on_scan_clicked)
         bottom_box.pack_end(scan_btn, False, False, 0)
@@ -370,7 +356,7 @@ class UnifiedControlPanel(Gtk.Window):
         page.pack_start(title, False, False, 0)
         
         # Brightness
-        brightness_label = Gtk.Label(label="🔆 Brightness")
+        brightness_label = Gtk.Label(label="󰃟  Brightness")
         brightness_label.set_xalign(0)
         page.pack_start(brightness_label, False, False, 0)
         self.brightness_slider = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 100, 1)
@@ -380,7 +366,7 @@ class UnifiedControlPanel(Gtk.Window):
         page.pack_start(self.brightness_slider, False, False, 0)
         
         # Volume
-        volume_label = Gtk.Label(label="🔊 Volume")
+        volume_label = Gtk.Label(label="󰕾  Volume")
         volume_label.set_xalign(0)
         page.pack_start(volume_label, False, False, 0)
         hbox_volume = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
@@ -390,7 +376,7 @@ class UnifiedControlPanel(Gtk.Window):
         self.volume_slider.set_hexpand(True)
         self.volume_slider.connect("value-changed", self.on_volume_changed)
         hbox_volume.pack_start(self.volume_slider, True, True, 0)
-        self.mute_button = Gtk.Button(label="🔇 Mute")
+        self.mute_button = Gtk.Button(label="󰖁 Mute")
         self.mute_button.set_size_request(120, 60)
         self.mute_button.connect("clicked", self.on_toggle_mute)
         hbox_volume.pack_start(self.mute_button, False, False, 0)
@@ -413,7 +399,7 @@ class UnifiedControlPanel(Gtk.Window):
         # Entry for link input
         self.link_entry = Gtk.Entry()
         self.link_entry.set_placeholder_text("Enter your link here...")
-        self.link_entry.set_size_request(400, 50)
+        self.link_entry.set_size_request(200, 50)
         page.pack_start(self.link_entry, False, False, 0)
         
         # Button box
@@ -421,13 +407,13 @@ class UnifiedControlPanel(Gtk.Window):
         page.pack_start(hbox, False, False, 0)
         
         # Dry Run button
-        btn_dry = Gtk.Button(label="👁️ Preview")
+        btn_dry = Gtk.Button(label="Preview")
         btn_dry.set_size_request(160, 60)
         btn_dry.connect("clicked", self.on_dry_run)
-        hbox.pack_start(btn_dry, True, True, 0)
+        hbox.pack_start(btn_dry, False, True, 0)
         
         # Save button
-        btn_save = Gtk.Button(label="💾 Save & Open")
+        btn_save = Gtk.Button(label="󰆓  Save")
         btn_save.set_size_request(160, 60)
         btn_save.connect("clicked", self.on_save_link)
         hbox.pack_start(btn_save, True, True, 0)
@@ -672,31 +658,39 @@ class UnifiedControlPanel(Gtk.Window):
        
     def update_mute_button(self):
         if self.is_muted():
-            self.mute_button.set_label("🔈 Unmute")
+            self.mute_button.set_label("󰖀  Unmute")
         else:
-            self.mute_button.set_label("🔇 Mute")
+            self.mute_button.set_label("󰖁  Mute")
            
     # Link Manager Methods
     def on_dry_run(self, widget):
         link = self.link_entry.get_text().strip()
-        if link:
-            webbrowser.open(link)
-        else:
+        
+        if not link:
             self.show_message("Error", "Please enter a link first!")
+        
+        if not link.startswith(("http://", "https://")):
+            link = "https://" + link
+
+        webbrowser.open(link)
            
     def on_save_link(self, widget):
         link = self.link_entry.get_text().strip()
-        if link:
-            try:
-                with open(LINK_FILE_PATH, "w") as f:
-                    f.write(link + "\n")
-                webbrowser.open(link)
-                self.link_entry.set_text("") # Clear entry after saving
-                self.show_message("Success", "Link saved and opened!")
-            except Exception as e:
-                self.show_message("Error", f"Failed to save link: {str(e)}")
-        else:
+
+        if not link:
             self.show_message("Error", "Please enter a link first!")
+        
+        if not link.startswith(("http://", "https://")):
+            link = "https://" + link
+
+        try:
+            with open(LINK_FILE_PATH, "w") as f:
+                f.write(link + "\n")
+            webbrowser.open(link)
+            self.link_entry.set_text("") # Clear entry after saving
+            self.show_message("Success", "Link saved and opened!")
+        except Exception as e:
+            self.show_message("Error", f"Failed to save link: {str(e)}")
            
     def show_message(self, title, message):
         """Show a message dialog"""
