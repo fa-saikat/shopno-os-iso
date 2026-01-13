@@ -2,6 +2,17 @@
 
 set -e
 
-
+if [[ -d /usr/src/onboard ]]; then
+    bash /usr/src/onboard/build_debs.sh
+    bash /usr/src/onboard/apt_install_debs.sh
+else
+    echo "Onboard src directory not found"
+fi
+# 
+# if [[ -f /etc/machine-id ]]; then
+#     dconf load /org/onboard/ < /etc/skel/.local/share/onboard/onboard.conf
+# else
+#     echo "machine-id not found"
+# fi
 # Kiosk initial configuration app 
 # mkdir -vp /usr/lib/shopno-os/kiosk-initial-setup

@@ -1,12 +1,18 @@
 #!/usr/bin/env bash 
 
+OBK_CONF="/etc/skel/.local/share/onboard/onboard.conf"
+
 xset -dpms
 xset s off
 xset s noblank
 
 unclutter --idle 1 &
+
+/usr/bin/dconf load /org/onboard/ < /etc/skel/.local/share/onboard/onboard.conf
 onboard --startup-delay=3 &
+
 xmodmap -e "clear mod1"
 xmodmap -e "clear mod4"
 
+nm-applet & 
 bash /usr/local/bin/start-kiosk-setup
