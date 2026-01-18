@@ -20,7 +20,7 @@ IMAGE_ID="trixie"
 IMAGE_VARIANT="workstation"
 
 # live-config flags
-IMAGE_NAME="ShopnoOS"
+IMAGE_NAME="ShopnoOS-$iso_release"
 ISO_APPLICATION="ShopnoOS"
 ISO_PREPARER="fa-saikat, JaduPc; https://git.jadupc.com/"
 ISO_PUBLISHER="JaduPc; https://jadupc.com/"

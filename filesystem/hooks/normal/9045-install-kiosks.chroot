@@ -8,6 +8,17 @@ if [[ -d /usr/src/onboard ]]; then
 else
     echo "Onboard src directory not found"
 fi
+
+if [[ ! -d /etc/lightdm/lightdm.conf.d ]]; then
+	mkdir -p /etc/lightdm/lightdm.conf.d
+fi
+
+cat << 'EOF' > /etc/lightdm/lightdm.conf.d/01-autologin.conf
+[Seat:*]
+autologin-user=kiosk
+autologin-session=openbox
+EOF
+
 # 
 # if [[ -f /etc/machine-id ]]; then
 #     dconf load /org/onboard/ < /etc/skel/.local/share/onboard/onboard.conf
